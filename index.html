@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Primeiras Teclas</title>
+<meta name="description" content="Aulas de piano para o Yamaha P-45.">
+<meta name="theme-color" content="#0D0C0B">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Teclas">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<style>
+@font-face{font-family:"Cormorant Garamond";src:url("fonts/cormorant-garamond-latin-500-normal.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"Cormorant Garamond";src:url("fonts/cormorant-garamond-latin-600-normal.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"Cormorant Garamond";src:url("fonts/cormorant-garamond-latin-500-italic.woff2") format("woff2");font-weight:500;font-style:italic;font-display:swap}
+@font-face{font-family:"Cormorant Garamond";src:url("fonts/cormorant-garamond-latin-600-italic.woff2") format("woff2");font-weight:600;font-style:italic;font-display:swap}
+@font-face{font-family:"Jost";src:url("fonts/jost-latin-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Jost";src:url("fonts/jost-latin-500-normal.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"Jost";src:url("fonts/jost-latin-600-normal.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap}
+html{background:#0D0C0B}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
+[hidden]{display:none!important}
+
+/* Layout: uma coluna, como um piano de cauda visto de frente. Laca preta, marfim, filete dourado, feltro vinho. Visual único e escuro, de propósito. */
+:root{
+  --bg:#0D0C0B; --surface:#161412; --surface-hi:#1E1B18; --ink:#EEE7D7; --muted:#9C9384; --line:#2F2A24;
+  --gold:#C8A45A; --gold-dim:#8C7442; --gold-soft:rgba(200,164,90,.12); --felt:#6B1A22;
+  --ok:#93B99A; --ok-soft:rgba(147,185,154,.14); --bad:#D27A80; --bad-soft:rgba(210,122,128,.14);
+  --ivory:#F4EEE1; --ivory-edge:#BDB4A3; --ebony:#0A0909; --ebony-hi:#3A3632;
+  --f-display:"Cormorant Garamond", "Garamond", "Times New Roman", serif;
+  --f-ui:"Jost", "Futura", "Century Gothic", system-ui, sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);background-image:radial-gradient(ellipse at 50% -10%, #221E1A 0%, var(--bg) 60%);color:var(--ink);font-family:var(--f-ui);font-weight:400;font-size:16px;line-height:1.55;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:22px 48px;min-height:100%}
+.wrap{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+.bar{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;padding-bottom:16px;border-bottom:1px solid var(--gold-dim)}
+.brand{font-family:var(--f-display);font-weight:500;font-style:italic;font-size:30px;letter-spacing:.01em;margin:0;margin-right:auto;line-height:1}
+.brand span{color:var(--gold);font-style:normal;font-weight:600;font-size:13px;letter-spacing:.32em;text-transform:uppercase;font-family:var(--f-ui);margin-left:10px;vertical-align:middle}
+select{font:inherit;font-size:15px;padding:9px 34px 9px 14px;border-radius:2px;border:1px solid var(--gold-dim);background:var(--surface);color:var(--ink);max-width:100%;min-width:0;letter-spacing:.02em}
+select option,select optgroup{background:var(--surface);color:var(--ink)}
+.icon-btn{font-family:var(--f-display);font-style:italic;font-size:20px;width:40px;height:40px;border-radius:50%;border:1px solid var(--gold-dim);background:transparent;color:var(--gold);cursor:pointer;flex:none;line-height:1}
+.icon-btn[aria-expanded="true"]{background:var(--gold);color:var(--bg)}
+.help{background:var(--surface);border:1px solid var(--line);border-top:1px solid var(--gold-dim);padding:20px 22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px 26px}
+.help h3{font-family:var(--f-display);font-weight:600;font-size:20px;margin:0 0 4px;color:var(--gold)}
+.help p{margin:0;color:var(--muted);font-size:14.5px}
+.help .songtip{grid-column:1/-1;border-left:2px solid var(--gold);padding:4px 0 4px 14px;color:var(--ink);font-family:var(--f-display);font-size:19px;font-style:italic;line-height:1.4}
+.help .songtip b{font-style:normal;font-family:var(--f-ui);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:2px;font-weight:600}
+kbd{font-family:var(--f-ui);font-size:12px;border:1px solid var(--line);border-bottom-width:2px;border-radius:3px;padding:0 5px;background:var(--surface-hi);color:var(--ink)}
+.stage{background:linear-gradient(180deg,var(--surface-hi),var(--surface) 40%);border:1px solid var(--line);border-radius:4px;padding:28px 26px 22px;display:flex;flex-direction:column;gap:18px;min-width:0;box-shadow:0 30px 60px -30px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.04)}
+@media (max-width:520px){.stage{padding:20px 14px 16px}}
+.head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:6px 16px}
+.head h1{font-family:var(--f-display);font-weight:600;font-size:clamp(30px,4.4vw,42px);line-height:1.05;margin:0;text-wrap:balance;letter-spacing:.005em}
+.meta{color:var(--gold);font-size:12px;letter-spacing:.2em;text-transform:uppercase;margin:8px 0 0;font-weight:500}
+.count{font-family:var(--f-display);font-size:20px;font-style:italic;color:var(--muted);font-variant-numeric:tabular-nums oldstyle-nums}
+.now-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;min-height:52px}
+.now{font-family:var(--f-display);font-weight:500;font-size:clamp(32px,5vw,46px);line-height:1}
+.now .fing{color:var(--gold);font-style:italic}
+.now.idle{font-size:clamp(20px,3vw,24px);color:var(--muted);font-style:italic}
+.flash{font-size:13px;letter-spacing:.06em;padding:3px 12px;border-radius:99px;font-weight:500}
+.flash.ok{background:var(--ok-soft);color:var(--ok)}
+.flash.bad{background:var(--bad-soft);color:var(--bad)}
+.progress{height:1px;background:var(--line);overflow:visible;position:relative}
+.progress i{display:block;height:1px;width:0;background:var(--gold);box-shadow:0 0 8px var(--gold)}
+.kb-wrap{overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch}
+.kb{position:relative;height:240px;display:flex;user-select:none;-webkit-user-select:none;touch-action:manipulation;padding-top:10px;background:linear-gradient(var(--felt),var(--felt)) top/100% 10px no-repeat;box-shadow:0 18px 30px -18px rgba(0,0,0,.9)}
+.kb::before{content:"";position:absolute;inset:0 0 auto;height:10px;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(0,0,0,.35));z-index:3}
+.wk{flex:1 0 40px;background:linear-gradient(180deg,#E6DFD0 0%,var(--ivory) 8%,var(--ivory) 92%,#E2DACA 100%);border:1px solid var(--ivory-edge);border-top:0;border-radius:0 0 4px 4px;margin-right:-1px;position:relative;cursor:pointer;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding-bottom:12px;gap:6px}
+.bk{position:absolute;top:10px;height:58%;background:linear-gradient(180deg,var(--ebony-hi) 0%,var(--ebony) 22%,var(--ebony) 88%,#2A2724 100%);border-radius:0 0 3px 3px;z-index:2;cursor:pointer;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding-bottom:8px;box-shadow:inset 1px 0 0 rgba(255,255,255,.07),inset -1px 0 0 rgba(255,255,255,.04),0 3px 4px rgba(0,0,0,.5)}
+.klab{font-family:var(--f-display);font-style:italic;font-size:14px;color:#7D7466;min-height:1em}
+.klab.mid{color:var(--felt);font-weight:600}
+.wk.hit{background:linear-gradient(180deg,#B8924A,var(--gold) 20%,#D9B970)}
+.bk.hit{background:linear-gradient(180deg,#E0C27E,var(--gold) 30%,#8C7442)}
+.wk.hit .klab{color:var(--ebony)}
+.wk.down{background:#DCD3C2}
+.bk.down{background:#2E2A26}
+.wk.good,.bk.good{background:var(--ok)}
+.fbadge{width:28px;height:28px;border-radius:50%;background:var(--ebony);color:var(--gold);font-family:var(--f-display);font-weight:600;font-size:17px;display:grid;place-items:center;border:1px solid var(--gold-dim)}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.spacer{flex:1 1 0}
+button.b{font-family:var(--f-ui);font-weight:500;font-size:13px;letter-spacing:.16em;text-transform:uppercase;border-radius:2px;padding:10px 16px;border:1px solid var(--gold-dim);background:transparent;color:var(--ink);cursor:pointer}
+button.b:hover,.icon-btn:hover{border-color:var(--gold)}
+button.b.primary{background:var(--gold);border-color:var(--gold);color:var(--ebony)}
+button.b.primary:hover{background:#D8B66C}
+button.b[aria-pressed="true"]{background:var(--ink);color:var(--ebony);border-color:var(--ink)}
+button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.field{display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.field input[type=range]{width:110px;accent-color:var(--gold)}
+.tempo-val{font-family:var(--f-display);font-style:italic;font-size:18px;letter-spacing:0;text-transform:none;color:var(--ink);font-variant-numeric:tabular-nums;min-width:3.5ch}
+.seg{display:inline-flex;border:1px solid var(--gold-dim);border-radius:2px;overflow:hidden}
+.seg button{font-family:var(--f-display);font-size:17px;font-weight:500;padding:5px 12px;border:0;background:transparent;color:var(--muted);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--gold-soft);color:var(--gold)}
+details.all{border-top:1px solid var(--line);padding-top:12px}
+details.all summary{cursor:pointer;color:var(--muted);font-size:12px;letter-spacing:.2em;text-transform:uppercase}
+details.all summary:hover{color:var(--gold)}
+.chips{display:flex;flex-direction:column;gap:8px;max-height:200px;overflow-y:auto;padding:12px 2px 2px}
+.phrase{display:flex;flex-wrap:wrap;gap:5px}
+.chip{font-family:var(--f-display);font-size:17px;border:1px solid var(--line);border-radius:2px;padding:2px 8px;background:transparent;color:var(--ink);cursor:pointer;display:inline-flex;gap:3px;align-items:baseline;line-height:1.3}
+.chip sup{font-size:11px;color:var(--gold);font-style:italic}
+.chip.long{border-bottom-color:var(--gold-dim)}
+.chip.past{opacity:.38}
+.chip.cur{background:var(--gold);border-color:var(--gold);color:var(--ebony)}
+.chip.cur sup{color:var(--ebony)}
+.chip.rest{color:var(--muted);font-style:italic}
+@media (prefers-reduced-motion:no-preference){.wk,.bk,.chip{transition:background .12s}.progress i{transition:width .2s}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar">
+    <p class="brand">Primeiras Teclas<span>Piano</span></p>
+    <label for="songSel" hidden>Música</label>
+    <select id="songSel" aria-label="Escolher música"></select>
+    <button class="icon-btn" id="helpBtn" type="button" aria-expanded="false" aria-controls="help" title="Ajuda">?</button>
+  </div>
+
+  <div class="help" id="help" hidden>
+    <p class="songtip" id="sTip"></p>
+    <div><h3>Dó central no P-45</h3><p>O Dó é a tecla branca à esquerda de cada par de teclas pretas. O Dó central é o 4º Dó contando da esquerda, perto do meio do piano.</p></div>
+    <div><h3>Números dos dedos</h3><p>1 polegar · 2 indicador · 3 médio · 4 anelar · 5 mindinho. Vale para as duas mãos.</p></div>
+    <div><h3>Como praticar</h3><p>Toque a tecla vermelha no seu piano e aperte <kbd>Espaço</kbd>. Sem piano por perto, clique na tela ou use <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd>… (pretas em <kbd>W</kbd> <kbd>E</kbd> <kbd>T</kbd>…, oitava com <kbd>Z</kbd>/<kbd>X</kbd>).</p></div>
+  </div>
+
+  <main class="stage" aria-live="polite">
+    <div class="head">
+      <div>
+        <h1 id="sTitle">Ode à Alegria</h1>
+        <p class="meta" id="sMeta"></p>
+      </div>
+      <span class="count" id="count"></span>
+    </div>
+
+    <div class="now-row">
+      <span class="now idle" id="now">Aperte Ouvir ou Praticar</span>
+      <span class="flash" id="flash" hidden></span>
+    </div>
+    <div class="progress" aria-hidden="true"><i id="prog"></i></div>
+
+    <div class="kb-wrap"><div class="kb" id="kb" aria-label="Teclado"></div></div>
+
+    <div class="controls" id="mainCtl">
+      <button class="b primary" id="btnListen" type="button">Ouvir</button>
+      <button class="b" id="btnPractice" type="button" aria-pressed="false">Praticar</button>
+      <button class="b" id="btnStop" type="button">Parar</button>
+      <span class="spacer"></span>
+      <label class="field" for="tempo">Velocidade
+        <input id="tempo" type="range" min="40" max="130" step="5" value="80">
+        <span class="tempo-val" id="tempoVal">80%</span>
+      </label>
+      <div class="seg" role="group" aria-label="Nome das notas">
+        <button type="button" id="nmSol" aria-pressed="true">Dó Ré Mi</button>
+        <button type="button" id="nmLet" aria-pressed="false">C D E</button>
+      </div>
+    </div>
+
+    <div class="controls" id="pbar" hidden>
+      <button class="b" id="btnPrev" type="button">← Voltar</button>
+      <button class="b" id="btnHear" type="button">Ouvir esta nota</button>
+      <button class="b primary" id="btnNext" type="button">Próxima →</button>
+      <button class="b" id="btnRestart" type="button">Recomeçar</button>
+    </div>
+
+    <details class="all">
+      <summary>Ver todas as notas</summary>
+      <div class="chips" id="chips"></div>
+    </details>
+  </main>
+</div>
+
+<script>
+(function(){
+const SONGS = [
+ {id:"estrelinha", title:"Brilha, Brilha Estrelinha", by:"Melodia tradicional", group:"Para começar", level:"Fácil", hand:"Mão direita", bpm:96,
+  tip:"Posição de Dó: polegar no Dó central. Só teclas brancas. Na 2ª frase, a mão volta para começar no Fá com o dedo 4.",
+  notes:"C4-1:1 C4-1:1 G4-4:1 G4-4:1 A4-5:1 A4-5:1 G4-4:2 | F4-4:1 F4-4:1 E4-3:1 E4-3:1 D4-2:1 D4-2:1 C4-1:2 | G4-5:1 G4-5:1 F4-4:1 F4-4:1 E4-3:1 E4-3:1 D4-2:2 | G4-5:1 G4-5:1 F4-4:1 F4-4:1 E4-3:1 E4-3:1 D4-2:2 | C4-1:1 C4-1:1 G4-4:1 G4-4:1 A4-5:1 A4-5:1 G4-4:2 | F4-4:1 F4-4:1 E4-3:1 E4-3:1 D4-2:1 D4-2:1 C4-1:2"},
+ {id:"parabens", title:"Parabéns a Você", by:"Melodia tradicional", group:"Para começar", level:"Fácil", hand:"Mão direita", bpm:96,
+  tip:"Compasso de 3 tempos. O primeiro \"Pa-ra\" é rápido: a primeira nota é mais longa que a segunda. No \"mui-tas fe-li-ci-da-des\" a mão sobe e depois volta com o polegar no Dó central.",
+  notes:"G3-1:0.75 G3-1:0.25 A3-2:1 G3-1:1 C4-4:1 B3-3:2 | G3-1:0.75 G3-1:0.25 A3-2:1 G3-1:1 D4-5:1 C4-4:2 | G3-1:0.75 G3-1:0.25 G4-5:1 E4-4:1 C4-3:1 B3-2:1 A3-1:2 | F4-4:0.75 F4-4:0.25 E4-3:1 C4-1:1 D4-2:1 C4-1:3"},
+ {id:"jingle", title:"Jingle Bells (Bate o Sino)", by:"James Lord Pierpont · 1857", group:"Para começar", level:"Fácil", hand:"Mão direita", bpm:112,
+  tip:"Posição de Dó, só teclas brancas, e quase tudo é Mi com o dedo 3. Bom para treinar ritmo: \"bate o si-no\" é curto-curto-longo.",
+  notes:"E4-3:1 E4-3:1 E4-3:2 E4-3:1 E4-3:1 E4-3:2 | E4-3:1 G4-5:1 C4-1:1.5 D4-2:0.5 E4-3:4 | F4-4:1 F4-4:1 F4-4:1.5 F4-4:0.5 F4-4:1 E4-3:1 E4-3:1 E4-3:0.5 E4-3:0.5 | E4-3:1 D4-2:1 D4-2:1 E4-3:1 D4-2:2 G4-5:2 | E4-3:1 E4-3:1 E4-3:2 E4-3:1 E4-3:1 E4-3:2 | E4-3:1 G4-5:1 C4-1:1.5 D4-2:0.5 E4-3:4 | F4-4:1 F4-4:1 F4-4:1.5 F4-4:0.5 F4-4:1 E4-3:1 E4-3:1 E4-3:0.5 E4-3:0.5 | G4-5:1 G4-5:1 F4-4:1 D4-2:1 C4-1:4"},
+ {id:"ode", title:"Ode à Alegria · Parte 1", by:"Beethoven · 1824", group:"Clássica", level:"Fácil", hand:"Mão direita", bpm:100,
+  tip:"Cabe em 5 teclas: polegar no Dó central e um dedo em cada tecla até o Sol. Só no fim da 3ª frase o polegar desce até o Sol de baixo.",
+  notes:"E4-3:1 E4-3:1 F4-4:1 G4-5:1 G4-5:1 F4-4:1 E4-3:1 D4-2:1 C4-1:1 C4-1:1 D4-2:1 E4-3:1 E4-3:1.5 D4-2:0.5 D4-2:2 | E4-3:1 E4-3:1 F4-4:1 G4-5:1 G4-5:1 F4-4:1 E4-3:1 D4-2:1 C4-1:1 C4-1:1 D4-2:1 E4-3:1 D4-2:1.5 C4-1:0.5 C4-1:2 | D4-2:1 D4-2:1 E4-3:1 C4-1:1 D4-2:1 E4-3:0.5 F4-4:0.5 E4-3:1 C4-1:1 D4-2:1 E4-3:0.5 F4-4:0.5 E4-3:1 D4-2:1 C4-1:1 D4-2:1 G3-1:2 | E4-3:1 E4-3:1 F4-4:1 G4-5:1 G4-5:1 F4-4:1 E4-3:1 D4-2:1 C4-1:1 C4-1:1 D4-2:1 E4-3:1 D4-2:1.5 C4-1:0.5 C4-1:2"},
+ {id:"ode2", title:"Ode à Alegria · Parte 2", by:"Beethoven · com a mão esquerda", group:"Clássica", level:"Fácil+", hand:"Duas mãos", bpm:92,
+  tip:"A mesma melodia, agora com a mão esquerda tocando uma nota grave no começo de cada compasso: Dó com o dedo 5 ou Sol com o dedo 1. Deixe a mão esquerda parada na posição de Dó, uma oitava abaixo da direita.",
+  notes:"C3-5+E4-3:1 E4-3:1 F4-4:1 G4-5:1 G3-1+G4-5:1 F4-4:1 E4-3:1 D4-2:1 C3-5+C4-1:1 C4-1:1 D4-2:1 E4-3:1 G3-1+E4-3:1.5 D4-2:0.5 D4-2:2 | C3-5+E4-3:1 E4-3:1 F4-4:1 G4-5:1 G3-1+G4-5:1 F4-4:1 E4-3:1 D4-2:1 C3-5+C4-1:1 C4-1:1 D4-2:1 E4-3:1 G3-1+D4-2:1.5 C4-1:0.5 C3-5+C4-1:2 | G3-1+D4-2:1 D4-2:1 E4-3:1 C4-1:1 G3-1+D4-2:1 E4-3:0.5 F4-4:0.5 E4-3:1 C4-1:1 G3-1+D4-2:1 E4-3:0.5 F4-4:0.5 E4-3:1 D4-2:1 C3-5+C4-1:1 D4-2:1 G3-1:2 | C3-5+E4-3:1 E4-3:1 F4-4:1 G4-5:1 G3-1+G4-5:1 F4-4:1 E4-3:1 D4-2:1 C3-5+C4-1:1 C4-1:1 D4-2:1 E4-3:1 G3-1+D4-2:1.5 C4-1:0.5 C3-5+C4-1:2"},
+ {id:"canon", title:"Cânone em Ré · Parte 1", by:"Pachelbel · c. 1680", group:"Clássica", level:"Fácil", hand:"Mão direita", bpm:66,
+  tip:"Notas longas e lentas. Desça do Fá# com o 5º dedo até o Si com o polegar, passe o polegar para o Lá e suba de novo.",
+  notes:"F#5-5:2 E5-4:2 D5-3:2 C#5-2:2 | B4-1:2 A4-1:2 B4-2:2 C#5-3:2 | F#5-5:2 E5-4:2 D5-3:2 C#5-2:2 | B4-1:2 A4-1:2 B4-2:2 C#5-3:2 | D5-4:4"},
+ {id:"canon2", title:"Cânone em Ré · Parte 2", by:"Pachelbel · a melodia que \"anda\"", group:"Clássica", level:"Fácil+", hand:"Mão direita", bpm:72,
+  tip:"Agora as notas andam em semínimas (uma por tempo). É a parte que todo mundo reconhece de casamentos. Mantenha o pulso regular, sem correr.",
+  notes:"D4-1:1 F#4-3:1 A4-5:1 G4-4:1 F#4-3:1 D4-1:1 F#4-3:1 E4-2:1 | D4-2:1 B3-1:1 D4-2:1 A4-5:1 G4-3:1 B4-5:1 A4-4:1 G4-3:1 | F#4-3:1 D4-1:1 E4-2:1 C#4-1:1 D4-2:1 F#4-3:1 A4-5:1 A4-5:1 | B4-5:1 G4-3:1 A4-4:1 F#4-2:1 D4-1:4"},
+ {id:"minueto", title:"Minueto em Sol", by:"Petzold · 1725", group:"Clássica", level:"Fácil+", hand:"Mão direita", bpm:96,
+  tip:"Polegar no Sol acima do Dó central. As notas curtas andam em escada; conte \"um-e-dois-e\". Repare no Fá# (tecla preta).",
+  notes:"D5-5:1 G4-1:0.5 A4-2:0.5 B4-3:0.5 C5-4:0.5 D5-5:1 G4-1:1 G4-1:1 | E5-3:1 C5-1:0.5 D5-2:0.5 E5-3:0.5 F#5-4:0.5 G5-5:1 G4-1:1 G4-1:1 | C5-4:1 D5-5:0.5 C5-4:0.5 B4-3:0.5 A4-2:0.5 B4-3:1 C5-4:0.5 B4-3:0.5 A4-2:0.5 G4-1:0.5 | F#4-2:1 G4-1:0.5 A4-2:0.5 B4-3:0.5 G4-1:0.5 A4-2:3"},
+ {id:"elise", title:"Pour Elise · Parte 1", by:"Beethoven · 1810", group:"Clássica", level:"Médio", hand:"Mão direita", bpm:120,
+  tip:"Comece em 60%. O vaivém Mi–Ré# usa os dedos 5 e 4. No original, a mão esquerda toca o baixo nas pausas; aqui está só a melodia.",
+  notes:"E5-5:0.5 D#5-4:0.5 | E5-5:0.5 D#5-4:0.5 E5-5:0.5 B4-2:0.5 D5-4:0.5 C5-3:0.5 | A4-1:1 R:0.5 C4-1:0.5 E4-2:0.5 A4-4:0.5 | B4-5:1 R:0.5 E4-2:0.5 G#4-3:0.5 B4-4:0.5 | C5-5:1 R:0.5 E4-1:0.5 E5-5:0.5 D#5-4:0.5 | E5-5:0.5 D#5-4:0.5 E5-5:0.5 B4-2:0.5 D5-4:0.5 C5-3:0.5 | A4-1:1 R:0.5 C4-1:0.5 E4-2:0.5 A4-4:0.5 | B4-5:1 R:0.5 E4-2:0.5 C5-4:0.5 B4-3:0.5 | A4-2:2"},
+ {id:"elise2", title:"Pour Elise · Parte 2", by:"Beethoven · com a mão esquerda", group:"Clássica", level:"Médio", hand:"Duas mãos", bpm:110,
+  tip:"Agora as pausas da Parte 1 viram o arpejo da mão esquerda: Lá–Mi–Lá e Mi–Mi–Sol#, subindo. As duas mãos se revezam, quase nunca tocam juntas. Comece em 50%.",
+  notes:"E5-5:0.5 D#5-4:0.5 | E5-5:0.5 D#5-4:0.5 E5-5:0.5 B4-2:0.5 D5-4:0.5 C5-3:0.5 | A2-5+A4-1:0.5 E3-2:0.5 A3-1:0.5 C4-1:0.5 E4-2:0.5 A4-4:0.5 | E2-5+B4-5:0.5 E3-2:0.5 G#3-1:0.5 E4-2:0.5 G#4-3:0.5 B4-4:0.5 | A2-5+C5-5:0.5 E3-2:0.5 A3-1:0.5 E4-1:0.5 E5-5:0.5 D#5-4:0.5 | E5-5:0.5 D#5-4:0.5 E5-5:0.5 B4-2:0.5 D5-4:0.5 C5-3:0.5 | A2-5+A4-1:0.5 E3-2:0.5 A3-1:0.5 C4-1:0.5 E4-2:0.5 A4-4:0.5 | E2-5+B4-5:0.5 E3-2:0.5 G#3-1:0.5 E4-2:0.5 C5-4:0.5 B4-3:0.5 | A2-5+A4-2:0.5 E3-2:0.5 A3-1:2"},
+ {id:"montanha", title:"Na Gruta do Rei da Montanha", by:"Grieg · 1875", group:"Clássica", level:"Médio", hand:"Mão direita", bpm:116,
+  tip:"Comece lento e acelere a cada volta, como na orquestra. Tem teclas pretas: Dó# e Fá#.",
+  notes:"B3-1:0.5 C#4-2:0.5 D4-3:0.5 E4-4:0.5 F#4-5:0.5 D4-3:0.5 F#4-5:1 | F4-4:0.5 C#4-2:0.5 F4-4:1 E4-4:0.5 C4-2:0.5 E4-4:1 | B3-1:0.5 C#4-2:0.5 D4-3:0.5 E4-4:0.5 F#4-5:0.5 D4-1:0.5 F#4-2:0.5 B4-5:0.5 | A4-4:0.5 F#4-2:0.5 D4-1:0.5 F#4-2:0.5 A4-4:2"},
+ {id:"greensleeves", title:"Greensleeves", by:"Canção inglesa · séc. XVI", group:"Clássica", level:"Fácil+", hand:"Mão direita", bpm:150,
+  tip:"Balanço de 6/8: conte \"UM-dois-três, DOIS-dois-três\", com a nota longa sempre no começo. Só uma tecla preta, o Sol# no fim das frases.",
+  notes:"A4-1:1 | C5-2:2 D5-3:1 E5-4:1.5 F5-5:0.5 E5-4:1 D5-4:2 B4-2:1 | G4-1:1.5 A4-2:0.5 B4-3:1 C5-4:2 A4-2:1 A4-2:1.5 G#4-1:0.5 A4-2:1 B4-3:2 G#4-1:1 E4-1:2 A4-1:1 | C5-2:2 D5-3:1 E5-4:1.5 F5-5:0.5 E5-4:1 D5-4:2 B4-2:1 | G4-1:1.5 A4-2:0.5 B4-3:1 C5-4:1.5 B4-3:0.5 A4-2:1 G#4-2:1.5 F#4-1:0.5 G#4-2:1 A4-3:3"},
+ {id:"marcha", title:"Marcha Turca · Parte 1", by:"Mozart · c. 1783", group:"Clássica", level:"Médio", hand:"Mão direita", bpm:76,
+  tip:"Cada grupo de 4 notas rápidas gira em volta de uma nota, como um enfeite, e termina numa nota curta e firme. Comece em 50% e acelere aos poucos. Só a abertura, para começar.",
+  notes:"B4-3:0.25 A4-2:0.25 G#4-1:0.25 A4-2:0.25 C5-4:0.5 R:0.5 | D5-3:0.25 C5-2:0.25 B4-1:0.25 C5-2:0.25 E5-4:0.5 R:0.5 | F5-3:0.25 E5-2:0.25 D#5-1:0.25 E5-2:0.25 B5-5:0.25 A5-4:0.25 G#5-3:0.25 A5-4:0.25 | B5-5:0.25 A5-4:0.25 G#5-3:0.25 A5-4:0.25 C6-5:1"},
+ {id:"arpejo", title:"Arpejo de Balada", by:"Exercício original · Dó, Sol, Lám, Fá", group:"Pop e rock", level:"Fácil+", hand:"Mão direita", bpm:84,
+  tip:"Em vez de tocar o acorde inteiro, toque as notas uma de cada vez (1-3-5-3). É o som clássico de balada ao piano. Deixe o pedal de sustain apertado, se você tiver um ligado ao P-45.",
+  notes:"C4-1:0.5 E4-3:0.5 G4-5:0.5 E4-3:0.5 C4-1:0.5 E4-3:0.5 G4-5:0.5 E4-3:0.5 | B3-1:0.5 D4-2:0.5 G4-5:0.5 D4-2:0.5 B3-1:0.5 D4-2:0.5 G4-5:0.5 D4-2:0.5 | C4-1:0.5 E4-3:0.5 A4-5:0.5 E4-3:0.5 C4-1:0.5 E4-3:0.5 A4-5:0.5 E4-3:0.5 | C4-1:0.5 F4-3:0.5 A4-5:0.5 F4-3:0.5 C4-1:0.5 F4-3:0.5 A4-5:0.5 F4-3:0.5 | C4-1+E4-3+G4-5:4"},
+ {id:"valsa", title:"Valsa ao Piano", by:"Exercício original · compasso 3/4", group:"Pop e rock", level:"Médio", hand:"Duas mãos", bpm:120,
+  tip:"Conte \"UM-dois-três\". No UM, a mão esquerda toca o baixo (nota grave). No dois e no três, a mão direita toca o acorde curto. Muitas baladas de piano-rock usam esse balanço.",
+  notes:"C3-5:1 E4-2+G4-4:1 E4-2+G4-4:1 G3-1:1 E4-2+G4-4:1 E4-2+G4-4:1 | A2-5:1 E4-2+A4-5:1 E4-2+A4-5:1 E3-1:1 E4-2+A4-5:1 E4-2+A4-5:1 | F2-5:1 F4-2+A4-4:1 F4-2+A4-4:1 C3-1:1 F4-2+A4-4:1 F4-2+A4-4:1 | G2-5:1 D4-1+G4-4:1 D4-1+G4-4:1 D3-1:1 D4-1+B4-5:1 D4-1+B4-5:1 | C3-5:1 E4-2+G4-4:1 E4-2+G4-4:1 C3-5+E4-2+G4-4:3"},
+ {id:"powerchords", title:"Rock de Três Acordes", by:"Exercício original · Dó5, Fá5, Sol5", group:"Pop e rock", level:"Fácil", hand:"Mão esquerda", bpm:112,
+  tip:"O power chord da guitarra no piano: duas notas, mindinho (5) embaixo e polegar (1) em cima. Toque curto e marcado.",
+  notes:"C3-5+G3-1:0.5 C3-5+G3-1:0.5 C3-5+G3-1:0.5 C3-5+G3-1:0.5 C3-5+G3-1:0.5 C3-5+G3-1:0.5 C3-5+G3-1:0.5 C3-5+G3-1:0.5 | F3-5+C4-1:0.5 F3-5+C4-1:0.5 F3-5+C4-1:0.5 F3-5+C4-1:0.5 F3-5+C4-1:0.5 F3-5+C4-1:0.5 F3-5+C4-1:0.5 F3-5+C4-1:0.5 | G3-5+D4-1:0.5 G3-5+D4-1:0.5 G3-5+D4-1:0.5 G3-5+D4-1:0.5 F3-5+C4-1:0.5 F3-5+C4-1:0.5 F3-5+C4-1:0.5 F3-5+C4-1:0.5 | C3-5+G3-1:0.5 C3-5+G3-1:0.5 C3-5+G3-1:0.5 C3-5+G3-1:0.5 C3-5+G3-1:2"},
+ {id:"riff", title:"Riff em Lá menor", by:"Exercício original · escala de blues", group:"Pop e rock", level:"Fácil+", hand:"Mão direita", bpm:104,
+  tip:"Escala de blues: Lá–Dó–Ré–Ré#–Mi–Sol. Volte sempre ao Lá grave com o polegar.",
+  notes:"A3-1:0.5 A3-1:0.5 C4-2:0.5 A3-1:0.5 D4-3:0.5 A3-1:0.5 D#4-3:0.5 E4-4:0.5 | A3-1:0.5 A3-1:0.5 C4-2:0.5 A3-1:0.5 D4-3:0.5 C4-2:0.5 A3-1:1 | A3-1:0.5 A3-1:0.5 C4-2:0.5 A3-1:0.5 D4-3:0.5 A3-1:0.5 D#4-3:0.5 E4-4:0.5 | G4-5:0.5 E4-4:0.5 D4-3:0.5 C4-2:0.5 A3-1:2"},
+ {id:"balada", title:"Acordes Lám, Fá, Dó, Sol", by:"Exercício original · sequência de pop-rock", group:"Pop e rock", level:"Fácil+", hand:"Mão direita", bpm:76,
+  tip:"Três notas juntas, com o mínimo de movimento: de um acorde para o outro quase sempre só um dedo se mexe.",
+  notes:"A3-1+C4-2+E4-4:4 A3-1+C4-2+F4-5:4 G3-1+C4-3+E4-5:4 G3-1+B3-2+D4-4:4 | A3-1+C4-2+E4-4:4 A3-1+C4-2+F4-5:4 G3-1+C4-3+E4-5:4 G3-1+B3-2+D4-4:4 | A3-1+C4-2+E4-4:4"}
+];
+
+const SOL = ["Dó","Dó#","Ré","Ré#","Mi","Fá","Fá#","Sol","Sol#","Lá","Lá#","Si"];
+const LET = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
+const PC = {C:0,D:2,E:4,F:5,G:7,A:9,B:11};
+const BLACK = new Set([1,3,6,8,10]);
+const KEYMAP = {a:0,w:1,s:2,e:3,d:4,f:5,t:6,g:7,y:8,h:9,u:10,j:11,k:12,o:13,l:14,p:15,";":16};
+
+const $ = id => document.getElementById(id);
+const store = {
+  get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+};
+
+function toMidi(n){const m=n.match(/^([A-G])(#?)(-?\d)$/);return 12*(parseInt(m[3])+1)+PC[m[1]]+(m[2]?1:0)}
+function parse(str){
+  const ev=[]; let phrase=0;
+  str.trim().split(/\s+/).forEach(tok=>{
+    if(tok==="|"){phrase++;return}
+    const [ns,d]=tok.split(":"); const dur=parseFloat(d);
+    if(ns==="R"){ev.push({rest:true,notes:[],dur,phrase});return}
+    const notes=ns.split("+").map(p=>{const [n,f]=p.split("-");return {midi:toMidi(n),finger:f?+f:null}});
+    ev.push({rest:false,notes,dur,phrase});
+  });
+  return ev;
+}
+
+let state = {
+  song: SONGS[0], events: [], idx: 0, mode: "idle", names: store.get("pt-names","sol"),
+  tempo: store.get("pt-tempo",80), timers: [], lo:48, hi:72, octShift:0,
+  done: store.get("pt-done",{}), last: store.get("pt-last","estrelinha")
+};
+const nm = midi => (state.names==="sol"?SOL:LET)[midi%12];
+const nmOct = midi => nm(midi) + (Math.floor(midi/12)-1);
+
+/* Áudio */
+let ctx=null, master=null;
+function audio(){
+  if(!ctx){const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return null; ctx=new AC();
+    master=ctx.createGain(); master.gain.value=0.5;
+    const lp=ctx.createBiquadFilter(); lp.type="lowpass"; lp.frequency.value=4200;
+    master.connect(lp); lp.connect(ctx.destination);}
+  if(ctx.state==="suspended") ctx.resume();
+  return ctx;
+}
+function tone(midi, secs){
+  const c=audio(); if(!c) return;
+  const t=c.currentTime, f=440*Math.pow(2,(midi-69)/12);
+  const g=c.createGain(); g.connect(master);
+  const tail=Math.max(secs,0.35)+0.9;
+  g.gain.setValueAtTime(0.0001,t);
+  g.gain.exponentialRampToValueAtTime(0.3,t+0.006);
+  g.gain.exponentialRampToValueAtTime(0.11,t+0.25);
+  g.gain.exponentialRampToValueAtTime(0.0001,t+tail);
+  [[1,"triangle",1],[2,"sine",0.28],[3,"sine",0.08]].forEach(([h,type,amp])=>{
+    const o=c.createOscillator(), og=c.createGain(); o.type=type; o.frequency.value=f*h; og.gain.value=amp;
+    o.connect(og); og.connect(g); o.start(t); o.stop(t+tail+0.05);
+  });
+}
+
+/* Menu de músicas */
+function renderSelect(){
+  const sel=$("songSel"); const cur=state.song.id; sel.innerHTML="";
+  [...new Set(SONGS.map(s=>s.group))].forEach(gname=>{
+    const og=document.createElement("optgroup"); og.label=gname;
+    SONGS.filter(s=>s.group===gname).forEach(s=>{
+      const o=document.createElement("option"); o.value=s.id;
+      o.textContent=(state.done[s.id]?"✓ ":"")+s.title+" · "+s.level; og.appendChild(o);
+    });
+    sel.appendChild(og);
+  });
+  sel.value=cur;
+}
+
+/* Teclado */
+function computeRange(){
+  let mn=127,mx=0; state.events.forEach(e=>e.notes.forEach(n=>{mn=Math.min(mn,n.midi);mx=Math.max(mx,n.midi)}));
+  let lo=Math.floor(mn/12)*12, hi=Math.floor(mx/12)*12+11;
+  if(hi-lo<23) hi=lo+23;
+  state.lo=lo; state.hi=hi;
+}
+function renderKeys(){
+  const kb=$("kb"); kb.innerHTML="";
+  const whites=[]; for(let m=state.lo;m<=state.hi;m++) if(!BLACK.has(m%12)) whites.push(m);
+  const n=whites.length; kb.style.minWidth=(n*40)+"px";
+  whites.forEach((m,i)=>{
+    const k=document.createElement("div"); k.className="wk"; k.dataset.m=m;
+    k.innerHTML=`<span class="fslot"></span><span class="klab ${m===60?"mid":""}">${m%12===0?(m===60?"Dó central":nmOct(m)):""}</span>`;
+    kb.appendChild(k);
+    const nb=m+1;
+    if(nb<=state.hi && BLACK.has(nb%12)){
+      const b=document.createElement("div"); b.className="bk"; b.dataset.m=nb;
+      const w=100/n, bw=w*0.62; b.style.left=((i+1)*w-bw/2)+"%"; b.style.width=bw+"%";
+      b.innerHTML=`<span class="fslot"></span>`;
+      kb.appendChild(b);
+    }
+  });
+  kb.querySelectorAll(".wk,.bk").forEach(el=>{
+    el.addEventListener("pointerdown",ev=>{ev.preventDefault(); pressKey(+el.dataset.m)});
+  });
+}
+function keyEl(m){return $("kb").querySelector(`[data-m="${m}"]`)}
+function clearHits(){ $("kb").querySelectorAll(".hit,.good").forEach(e=>e.classList.remove("hit","good")); $("kb").querySelectorAll(".fslot").forEach(s=>s.innerHTML=""); }
+function showEvent(e){
+  clearHits(); if(!e||e.rest) return;
+  e.notes.forEach(n=>{const el=keyEl(n.midi); if(!el) return; el.classList.add("hit");
+    if(n.finger) el.querySelector(".fslot").innerHTML=`<span class="fbadge">${n.finger}</span>`;});
+  const first=keyEl(e.notes[0].midi);
+  if(first){const wrap=first.closest(".kb-wrap"); const r=first.offsetLeft; if(r<wrap.scrollLeft+20||r>wrap.scrollLeft+wrap.clientWidth-60) wrap.scrollTo({left:r-wrap.clientWidth/2,behavior:"smooth"});}
+}
+
+/* Lista de notas */
+function renderChips(){
+  const box=$("chips"); box.innerHTML="";
+  let row=null, ph=-1;
+  state.events.forEach((e,i)=>{
+    if(e.phrase!==ph){row=document.createElement("div"); row.className="phrase"; box.appendChild(row); ph=e.phrase;}
+    const c=document.createElement("button"); c.type="button"; c.className="chip"+(e.rest?" rest":"")+(e.dur>=2?" long":""); c.dataset.i=i;
+    if(e.rest){c.textContent="pausa"}
+    else{c.innerHTML=e.notes.map(n=>nm(n.midi)).join("+")+(e.notes[0].finger?`<sup>${e.notes.map(n=>n.finger).join("")}</sup>`:"");}
+    c.onclick=()=>{ if(state.mode!=="practice") startPractice(); goTo(i); };
+    row.appendChild(c);
+  });
+  markChips();
+}
+function markChips(){
+  $("chips").querySelectorAll(".chip").forEach(c=>{const i=+c.dataset.i;
+    c.classList.toggle("cur",state.mode!=="idle"&&i===state.idx);
+    c.classList.toggle("past",state.mode!=="idle"&&i<state.idx);});
+  const total=state.events.length;
+  $("prog").style.width=(state.mode==="idle"?0:Math.min(100,(state.idx+1)/total*100))+"%";
+}
+
+/* Status */
+function describe(e){
+  if(!e) return "";
+  if(e.rest) return "Pausa";
+  if(e.notes.length===1){const n=e.notes[0]; return `${nmOct(n.midi)}${n.finger?` <span class="fing">· dedo ${n.finger}</span>`:""}`;}
+  return `${e.notes.map(n=>nm(n.midi)).join(" + ")} <span class="fing">· dedos ${e.notes.map(n=>n.finger).join("-")}</span>`;
+}
+function setStatus(){
+  const total=state.events.length, now=$("now");
+  if(state.mode==="idle"){ now.className="now idle"; now.textContent="Aperte Ouvir ou Praticar"; $("count").textContent=`${total} notas`; return;}
+  now.className="now"; now.innerHTML=describe(state.events[state.idx]);
+  $("count").textContent=`${Math.min(state.idx+1,total)} / ${total}`;
+}
+let flashT=null;
+function flash(txt,kind){const f=$("flash"); f.textContent=txt; f.className="flash "+kind; f.hidden=false; clearTimeout(flashT); flashT=setTimeout(()=>f.hidden=true,1400);}
+
+/* Modos */
+function beatSec(){return 60/(state.song.bpm*state.tempo/100)}
+function stop(){
+  state.timers.forEach(clearTimeout); state.timers=[];
+  state.mode="idle"; state.idx=0; clearHits(); markChips(); setStatus();
+  $("btnPractice").setAttribute("aria-pressed","false"); $("pbar").hidden=true; $("btnListen").textContent="Ouvir";
+}
+function listen(){
+  stop(); state.mode="play"; $("btnListen").textContent="Tocando…";
+  const bs=beatSec(); let t=0;
+  state.events.forEach((e,i)=>{
+    state.timers.push(setTimeout(()=>{
+      state.idx=i; showEvent(e); markChips(); setStatus();
+      if(!e.rest) e.notes.forEach(n=>tone(n.midi,e.dur*bs));
+    }, t*1000+30));
+    t+=e.dur*bs;
+  });
+  state.timers.push(setTimeout(stop, t*1000+400));
+}
+function startPractice(){
+  stop(); audio(); state.mode="practice";
+  $("btnPractice").setAttribute("aria-pressed","true"); $("pbar").hidden=false;
+  goTo(0);
+}
+function goTo(i){
+  state.idx=Math.max(0,Math.min(i,state.events.length-1));
+  showEvent(state.events[state.idx]); markChips(); setStatus();
+}
+function next(){
+  if(state.mode!=="practice") return;
+  if(state.idx>=state.events.length-1){ finish(); return; }
+  goTo(state.idx+1);
+  if(state.events[state.idx].rest){ setTimeout(()=>{ if(state.mode==="practice" && state.events[state.idx] && state.events[state.idx].rest) next(); }, 450); }
+}
+function finish(){
+  state.done[state.song.id]=true; store.set("pt-done",state.done); renderSelect();
+  clearHits(); const now=$("now"); now.className="now"; now.textContent="Música completa! 🎉";
+  $("count").textContent="Tente um pouco mais rápido"; flash("Concluída","ok");
+  state.idx=state.events.length-1; markChips(); state.idx=state.events.length;
+}
+function hearCurrent(){const e=state.events[state.idx]; if(e&&!e.rest) e.notes.forEach(n=>tone(n.midi,0.8));}
+
+function pressKey(m){
+  tone(m,0.6);
+  const el=keyEl(m);
+  if(el){el.classList.add("down"); setTimeout(()=>el.classList.remove("down"),160);}
+  if(state.mode!=="practice") return;
+  const e=state.events[state.idx]; if(!e||e.rest) return;
+  if(e.notes.some(n=>n.midi===m)){
+    if(el){el.classList.remove("hit"); el.classList.add("good");}
+    setTimeout(next,170);
+  } else {
+    const t=e.notes[0].midi;
+    flash(m%12===t%12?"Nota certa, oitava errada":`Era ${nm(t)}`,"bad");
+  }
+}
+
+/* Seleção */
+function selectSong(id){
+  const s=SONGS.find(x=>x.id===id)||SONGS[0];
+  stop(); state.song=s; state.events=parse(s.notes); state.octShift=0; store.set("pt-last",s.id);
+  $("sTitle").textContent=s.title;
+  $("sMeta").textContent=`${s.by} · ${s.hand}`;
+  $("sTip").innerHTML=`<b>Dica para esta música:</b> ${s.tip}`;
+  computeRange(); renderKeys(); renderChips(); renderSelect(); setStatus();
+}
+
+/* Eventos */
+$("songSel").onchange=e=>selectSong(e.target.value);
+$("helpBtn").onclick=()=>{const h=$("help"); h.hidden=!h.hidden; $("helpBtn").setAttribute("aria-expanded",String(!h.hidden));};
+$("btnListen").onclick=()=>{audio(); listen();};
+$("btnStop").onclick=stop;
+$("btnPractice").onclick=()=>{ state.mode==="practice"?stop():startPractice(); };
+$("btnNext").onclick=next;
+$("btnPrev").onclick=()=>goTo(state.idx-1);
+$("btnHear").onclick=hearCurrent;
+$("btnRestart").onclick=()=>goTo(0);
+const tempo=$("tempo"); tempo.value=state.tempo; $("tempoVal").textContent=state.tempo+"%";
+tempo.oninput=()=>{state.tempo=+tempo.value; $("tempoVal").textContent=state.tempo+"%"; store.set("pt-tempo",state.tempo);};
+function setNames(v){state.names=v; store.set("pt-names",v);
+  $("nmSol").setAttribute("aria-pressed",String(v==="sol")); $("nmLet").setAttribute("aria-pressed",String(v==="let"));
+  renderKeys(); renderChips(); setStatus(); if(state.mode!=="idle") showEvent(state.events[state.idx]);}
+$("nmSol").onclick=()=>setNames("sol"); $("nmLet").onclick=()=>setNames("let");
+
+document.addEventListener("keydown",ev=>{
+  if(ev.target.closest("input,textarea,select")||ev.metaKey||ev.ctrlKey||ev.altKey) return;
+  const k=ev.key.toLowerCase();
+  if(k===" "){ if(state.mode==="practice"){ev.preventDefault(); next();} return; }
+  if(k==="arrowleft"&&state.mode==="practice"){goTo(state.idx-1);return}
+  if(k==="arrowright"&&state.mode==="practice"){next();return}
+  if(k==="z"){state.octShift=Math.max(-1,state.octShift-1);return}
+  if(k==="x"){state.octShift=Math.min(2,state.octShift+1);return}
+  if(ev.repeat) return;
+  if(k in KEYMAP){ ev.preventDefault(); pressKey(state.lo+state.octShift*12+KEYMAP[k]); }
+});
+
+state.events=parse(state.song.notes);
+setNames(state.names);
+selectSong(state.last);
+})();
+</script>
+<script>
+if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{});});}
+</script>
+</body>
+</html>
